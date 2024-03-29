@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "BrqjtMdXZfV0vvCvv9JCvIg59VMnPpcBGRM55IYvoBY1fQkapfApmNn9ZLfqRKcAuSybGjcsDhugyU3aPSN4fQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\TGCUser105\\Desktop\\Employee\\Employee\\Employee.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\TGCUser105\\.nuget\\packages\\system.net.http.json\\7.0.0\\system.net.http.json.7.0.0.nupkg.sha512",
+    "C:\\Users\\TGCUser105\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
+    "C:\\Users\\TGCUser105\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

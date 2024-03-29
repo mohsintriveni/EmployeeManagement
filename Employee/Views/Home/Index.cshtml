@@ -1,0 +1,203 @@
+﻿@model List<EmployeeModel>
+
+<h1>Employee List</h1>
+
+<div class="mb-3">
+    <a id="addEmployee" class="btn btn-success">Add</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.Email</td>
+                <td>@employee.Gender</td>
+                <td>@employee.Salary</td>
+                <td>
+                    <button class="btn btn-primary view-details-btn" data-id="@employee.Id">View Details</button>
+                    <a href="@Url.Action("EditEmployee", "Home", new { id = employee.Id })" class="btn btn-warning">Edit</a>
+                    <button class="btn btn-danger delete-btn" data-id="@employee.Id">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="addEmployeeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addEmployeeForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="maleGender" value="M" checked>
+                            <label class="form-check-label" for="maleGender">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="F">
+                            <label class="form-check-label" for="femaleGender">Female</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="maritalStatus" name="maritalStatus">
+                        <label class="form-check-label" for="maritalStatus">Are you married?</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate">Birth Date:</label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="hobbies">Hobbies:</label>
+                        <input type="text" class="form-control" id="hobbies" name="hobbies" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>
+                        <input type="number" class="form-control" id="salary" name="salary" min="5000">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea class="form-control" id="address" name="address" maxlength="500"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <select class="form-control" id="country" name="country">
+                            <option value="">Select Country</option>
+                            @if (ViewBag.Countries != null)
+                            {
+                                foreach (var country in ViewBag.Countries)
+                                {
+                                    <option value="@country.Value">@country.Text</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">No countries available</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCode">Zip Code:</label>
+                        <input type="text" class="form-control" id="zipCode" name="zipCode" pattern="\d{6}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,16}$" required>
+                    </div>
+                    <!-- Add fields for Country, State, and City (dropdowns or input fields) -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="employee-details-container"></div>
+
+<script>
+    $(document).ready(function () {
+        $('.view-details-btn').click(function () {
+            var employeeId = $(this).data('id');
+            @* $.get("/Employee/EmployeeDetails/" + employeeId, function (data) {
+                $('#employee-details-container').html(data);
+            }); *@
+            $.ajax({
+                url: '/Employee/EmployeeDetails/',
+                type: 'GET',
+                data: { id: employeeId },
+                success: function (result) {
+                    $('#employee-details-container').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+        $('.delete-btn').click(function () {
+            var employeeId = $(this).data('id');
+
+            if (confirm("Are you sure you want to delete this employee?")) {
+                $.ajax({
+                    url: '/Home/DeleteEmployee',
+                    type: 'DELETE',
+                    data: { id: employeeId },
+                    success: function (result) {
+                        console.log("Employee deleted successfully");
+                        button.closest('tr').remove();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+        @* $('#addEmployee').click(function () {
+            $('#addEmployeeModal').modal('show');
+        }); *@
+
+            $('#addEmployee').click(function () {
+                $('#addEmployeeModal').modal('show');
+                
+            });
+        $.ajax({
+            url: '/Home/GetCountry',
+            type: 'GET',
+            success: function (result) {
+                debugger;
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+            
+
+        $('#addEmployeeForm').submit(function (e) {
+            e.preventDefault(); 
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '/Employee/AddEmployeeAsync',
+                type: 'POST',
+                data: formData,
+                success: function (result) {
+                    $('#addEmployeeModal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
+    }); 
+</script>
