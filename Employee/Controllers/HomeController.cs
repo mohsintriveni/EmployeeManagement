@@ -33,7 +33,7 @@ namespace Employee.Controllers
         {
             var countries = await _employeeService.GetCountries();
             ViewBag.Countries = new SelectList(countries, "Id", "Name");
-            return View();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
@@ -47,13 +47,25 @@ namespace Employee.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> DeleteEmployee(int id)
+        public IActionResult DeleteEmployee(int id)
         {
             try
             {
-                await _employeeService.DeleteEmployeeAsync(id);
-                var employees = await _employeeService.GetEmployeesAsync();
-                return View(employees);
+                _employeeService.DeleteEmployeeAsync(id);
+                return Json(new { success = true });
+            }
+            catch (HttpRequestException)
+            {
+                return View("Error");
+            }
+        }
+
+        public ActionResult EmployeeDetails(int id)
+        {
+            try
+            {
+                var employee = _employeeService.GetEmployeeByIdAsync(id);
+                return Ok(employee);
             }
             catch (HttpRequestException)
             {

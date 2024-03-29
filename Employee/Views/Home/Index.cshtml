@@ -3,7 +3,7 @@
 <h1>Employee List</h1>
 
 <div class="mb-3">
-    <a id="addEmployee" class="btn btn-success">Add</a>
+    <a id="addEmployee" data-toggle="modal" data-target="#addEmployeeModal" class="btn btn-success">Add</a>
 </div>
 
 <table class="table">
@@ -27,7 +27,7 @@
                 <td>@employee.Salary</td>
                 <td>
                     <button class="btn btn-primary view-details-btn" data-id="@employee.Id">View Details</button>
-                    <a href="@Url.Action("EditEmployee", "Home", new { id = employee.Id })" class="btn btn-warning">Edit</a>
+                    <a data-toggle="modal" data-target="#addEmployeeModal" class="btn btn-warning updateEmployee" data-id="@employee.Id">Edit</a>
                     <button class="btn btn-danger delete-btn" data-id="@employee.Id">Delete</button>
                 </td>
             </tr>
@@ -35,92 +35,115 @@
     </tbody>
 </table>
 
-<div id="addEmployeeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+<!-- Modal for adding/editing employee -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+                <h5 class="modal-title" id="addEmployeeModalLabel">Employee Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addEmployeeForm">
+                <form id="employeeForm">
+                    <input type="hidden" id="employeeId" />
                     <div class="form-group">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" required maxlength="50">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" maxlength="50" required />
+                        <span class="text-danger" id="firstNameError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" required maxlength="50">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" maxlength="50" required />
+                        <span class="text-danger" id="lastNameError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" maxlength="50">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="50" />
+                        <span class="text-danger" id="emailError"></span>
                     </div>
                     <div class="form-group">
-                        <label>Gender:</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" id="maleGender" value="M" checked>
+                        <label for="gender">Gender</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="maleGender" value="M">
                             <label class="form-check-label" for="maleGender">Male</label>
                         </div>
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="F">
                             <label class="form-check-label" for="femaleGender">Female</label>
                         </div>
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="maritalStatus" name="maritalStatus">
-                        <label class="form-check-label" for="maritalStatus">Are you married?</label>
+                        <span class="text-danger" id="genderError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="birthDate">Birth Date:</label>
-                        <input type="date" class="form-control" id="birthDate" name="birthDate">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="maritalStatus" name="maritalStatus" value="true">
+                            <label class="form-check-label" for="maritalStatus">Are you married?</label>
+                        </div>
+                        <span class="text-danger" id="maritalStatusError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="hobbies">Hobbies:</label>
-                        <input type="text" class="form-control" id="hobbies" name="hobbies" maxlength="100">
+                        <label for="birthDate">Birth Date</label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDate" />
+                        <span class="text-danger" id="birthDateError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="salary">Salary:</label>
-                        <input type="number" class="form-control" id="salary" name="salary" min="5000">
+                        <label for="hobbies">Hobbies</label>
+                        <input type="text" class="form-control" id="hobbies" name="hobbies" maxlength="100" />
+                        <span class="text-danger" id="hobbiesError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="address">Address:</label>
+                        <label for="salary">Salary</label>
+                        <input type="number" class="form-control" id="salary" name="salary" min="5000" step="any" />
+                        <span class="text-danger" id="salaryError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
                         <textarea class="form-control" id="address" name="address" maxlength="500"></textarea>
+                        <span class="text-danger" id="addressError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="country">Country:</label>
+                        <label for="country">Country</label>
                         <select class="form-control" id="country" name="country">
-                            <option value="">Select Country</option>
-                            @if (ViewBag.Countries != null)
-                            {
-                                foreach (var country in ViewBag.Countries)
-                                {
-                                    <option value="@country.Value">@country.Text</option>
-                                }
-                            }
-                            else
-                            {
-                                <option value="">No countries available</option>
-                            }
+                            <!-- Populate options dynamically or hardcode them -->
                         </select>
+                        <span class="text-danger" id="countryError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="zipCode">Zip Code:</label>
-                        <input type="text" class="form-control" id="zipCode" name="zipCode" pattern="\d{6}">
+                        <label for="state">State</label>
+                        <select class="form-control" id="state" name="state">
+                            <!-- Populate options dynamically or hardcode them -->
+                        </select>
+                        <span class="text-danger" id="stateError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,16}$" required>
+                        <label for="city">City</label>
+                        <select class="form-control" id="city" name="city">
+                            <!-- Populate options dynamically or hardcode them -->
+                        </select>
+                        <span class="text-danger" id="cityError"></span>
                     </div>
-                    <!-- Add fields for Country, State, and City (dropdowns or input fields) -->
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="form-group">
+                        <label for="zipCode">Zip Code</label>
+                        <input type="text" class="form-control" id="zipCode" name="zipCode" maxlength="6" />
+                        <span class="text-danger" id="zipCodeError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,16}$" title="Password must be 8-16 characters long and contain at least one uppercase letter, one number, and one special character." required />
+                        <span class="text-danger" id="passwordError"></span>
+                    </div>
                 </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveEmployeeBtn">Save</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <div id="employee-details-container"></div>
 
@@ -143,8 +166,41 @@
                 }
             });
         });
+
+        $('#addEmployee').click(function () {
+            $('#addEmployeeModal').modal('show');
+        });
+        $('.updateEmployee').click(function () {
+            $('#addEmployeeModal').modal('show');
+        });
+
+        $('#saveEmployeeBtn').click(function (e) {
+            var formData = $('#employeeForm').serialize();
+            e.preventDefault();
+
+            $.ajax({
+                url: '/Employee/AddEmployeeAsync/',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        // Optionally, you can perform some action upon successful addition
+                        alert('Employee added successfully');
+                        $('#addEmployeeModal').modal('hide');
+                    } else {
+                        // Handle errors if any
+                        alert('Failed to add employee');
+                    }
+                },
+                error: function () {
+                    alert('Error occurred while adding employee');
+                }
+            });
+        });
+
         $('.delete-btn').click(function () {
             var employeeId = $(this).data('id');
+            var deleteButton = $(this);
 
             if (confirm("Are you sure you want to delete this employee?")) {
                 $.ajax({
@@ -153,50 +209,13 @@
                     data: { id: employeeId },
                     success: function (result) {
                         console.log("Employee deleted successfully");
-                        button.closest('tr').remove();
+                        deleteButton.closest('tr').remove();
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });
             }
-        });
-        @* $('#addEmployee').click(function () {
-            $('#addEmployeeModal').modal('show');
-        }); *@
-
-            $('#addEmployee').click(function () {
-                $('#addEmployeeModal').modal('show');
-                
-            });
-        $.ajax({
-            url: '/Home/GetCountry',
-            type: 'GET',
-            success: function (result) {
-                debugger;
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-            
-
-        $('#addEmployeeForm').submit(function (e) {
-            e.preventDefault(); 
-
-            var formData = $(this).serialize();
-
-            $.ajax({
-                url: '/Employee/AddEmployeeAsync',
-                type: 'POST',
-                data: formData,
-                success: function (result) {
-                    $('#addEmployeeModal').modal('hide');
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
         });
 
     }); 
