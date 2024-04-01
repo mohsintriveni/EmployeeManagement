@@ -32,19 +32,5 @@ namespace Employee.Services
             var response = await _httpClient.DeleteAsync($"api/Employees/delete-employee/{id}"); 
             response.EnsureSuccessStatusCode();
         }
-
-        public async Task<EmployeeModel> AddEmployeeAsync(EmployeeModel employee)
-        {
-            var response = await _httpClient.PostAsJsonAsync($"api/Employees/add-employee/",employee);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<EmployeeModel>();
-        }
-
-        public async Task<List<CountryModel>> GetCountries()
-        {
-            var response = await _httpClient.GetAsync($"api/Country/get-countries");
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<CountryModel>>();
-        }
     }
 }

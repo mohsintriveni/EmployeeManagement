@@ -6,7 +6,7 @@
     <a id="addEmployee" data-toggle="modal" data-target="#addEmployeeModal" class="btn btn-success">Add</a>
 </div>
 
-<table class="table">
+<table id="employeeTable" class="table">
     <thead>
         <tr>
             <th>FirstName</th>
@@ -35,120 +35,102 @@
     </tbody>
 </table>
 
-<!-- Modal for adding/editing employee -->
-<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addEmployeeModalLabel">Employee Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="employeeForm">
-                    <input type="hidden" id="employeeId" />
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" maxlength="50" required />
-                        <span class="text-danger" id="firstNameError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" maxlength="50" required />
-                        <span class="text-danger" id="lastNameError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" maxlength="50" />
-                        <span class="text-danger" id="emailError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label><br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="maleGender" value="M">
-                            <label class="form-check-label" for="maleGender">Male</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="F">
-                            <label class="form-check-label" for="femaleGender">Female</label>
-                        </div>
-                        <span class="text-danger" id="genderError"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="maritalStatus" name="maritalStatus" value="true">
-                            <label class="form-check-label" for="maritalStatus">Are you married?</label>
-                        </div>
-                        <span class="text-danger" id="maritalStatusError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="birthDate">Birth Date</label>
-                        <input type="date" class="form-control" id="birthDate" name="birthDate" />
-                        <span class="text-danger" id="birthDateError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="hobbies">Hobbies</label>
-                        <input type="text" class="form-control" id="hobbies" name="hobbies" maxlength="100" />
-                        <span class="text-danger" id="hobbiesError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="salary">Salary</label>
-                        <input type="number" class="form-control" id="salary" name="salary" min="5000" step="any" />
-                        <span class="text-danger" id="salaryError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea class="form-control" id="address" name="address" maxlength="500"></textarea>
-                        <span class="text-danger" id="addressError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select class="form-control" id="country" name="country">
-                            <!-- Populate options dynamically or hardcode them -->
-                        </select>
-                        <span class="text-danger" id="countryError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="state">State</label>
-                        <select class="form-control" id="state" name="state">
-                            <!-- Populate options dynamically or hardcode them -->
-                        </select>
-                        <span class="text-danger" id="stateError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <select class="form-control" id="city" name="city">
-                            <!-- Populate options dynamically or hardcode them -->
-                        </select>
-                        <span class="text-danger" id="cityError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="zipCode">Zip Code</label>
-                        <input type="text" class="form-control" id="zipCode" name="zipCode" maxlength="6" />
-                        <span class="text-danger" id="zipCodeError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,16}$" title="Password must be 8-16 characters long and contain at least one uppercase letter, one number, and one special character." required />
-                        <span class="text-danger" id="passwordError"></span>
-                    </div>
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveEmployeeBtn">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+@{
+    await Html.RenderPartialAsync("AddEdit");
+}
 
 <div id="employee-details-container"></div>
 
 <script>
     $(document).ready(function () {
+
+        // function updateEmployeeList() {
+        //     $.ajax({
+        //         url: '/Home/Index',
+        //         method: 'GET',
+        //         success: function (data) {
+        //             $('#employeeTable tbody').html(data);
+        //         },
+        //         error: function (xhr, status, error) {
+        //             console.error(error);
+        //         }
+        //     });
+        // }
+
+        var ddlCountry = $('#ddlCountry');
+        ddlCountry.append($("<option></option>").val('').html('Please Select Country'));
+        $.ajax({
+            url: 'http://localhost:5055/api/Country/get-countries',
+            type: 'GET',
+            dataType: 'json',
+            success: function (d) {
+                $.each(d, function (i, country) {
+                    ddlCountry.append($("<option></option>").val(country.id).html(country.countryName));
+                });
+            },
+            error: function () {
+                alert('Error!');
+            }
+        });
+
+        $("#ddlCountry").change(function () {
+            var selectedValue = $(this).val();
+            console.log("Selected value:", selectedValue);
+            var CountryId = parseInt($(this).val());
+            console.log(CountryId);
+
+            if (!isNaN(CountryId)) {
+                var ddlState = $('#ddlState');
+                ddlState.empty();
+                ddlState.append($("<option></option>").val('').html('Please wait ...'));
+
+                debugger;
+                $.ajax({
+                    url: 'http://localhost:5055/api/States/get-states-by-country/',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { Id: CountryId },
+                    success: function (d) {
+
+                        ddlState.empty();
+                        ddlState.append($("<option></option>").val('').html('Select State'));
+                        $.each(d, function (i, states) {
+                            ddlState.append($("<option></option>").val(states.id).html(states.stateName));
+                        });
+                    },
+                    error: function () {
+                        alert('Error!');
+                    }
+                });
+            }
+        });
+
+        $("#ddlState").change(function () {
+            var StateId = parseInt($(this).val());
+            if (!isNaN(StateId)) {
+                var ddlCity = $('#ddlCity');
+                ddlCity.append($("<option></option>").val('').html('Please wait ...'));
+
+                debugger;
+                $.ajax({
+                    url: 'http://localhost:5055/api/City/get-cities-by-state/',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { Id: StateId },
+                    success: function (d) {
+                        ddlCity.empty();
+                        ddlCity.append($("<option></option>").val('').html('Select City Name'));
+                        $.each(d, function (i, cities) {
+                            ddlCity.append($("<option></option>").val(cities.id).html(cities.cityName));
+                        });
+                    },
+                    error: function () {
+                        alert('Error!');
+                    }
+                });
+            }
+        });
+
         $('.view-details-btn').click(function () {
             var employeeId = $(this).data('id');
             @* $.get("/Employee/EmployeeDetails/" + employeeId, function (data) {
@@ -167,33 +149,133 @@
             });
         });
 
+        // $('#addEmployee').click(function () {
+        //     $('#addEmployeeModal').modal('show');
+        // });
+
+        // $('.updateEmployee').click(function () {
+        //     $('#addEmployeeModal').modal('show');
+        // });
+
+        function openEntityModal(employeeData) {
+            if (employeeData) {
+                var employee = JSON.parse(employeeData);
+                console.log(employee);
+                $('#employeeId').val(employee.id);
+                $('#firstName').val(employee.firstName);
+                $('#lastName').val(employee.lastName);
+                $('#email').val(employee.email);
+                $('#gender').val(employee.gender);
+                $('#hobbies').val(employee.hobbies);
+                $('#salary').val(employee.salary);
+                $('#maritalStatus').val(employee.maritalStatus);
+                $('#birthDate').val(employee.birthDate);
+                $('#ddlCountry').val(employee.country);
+                $('#ddlState').val(employee.state);
+                $('#ddlCity').val(employee.city);
+                $('#zipCode').val(employee.zipCode);
+                $('#password').val(employee.password);
+                $('#address').val(employee.address);
+            }
+            else {
+                $('#firstName').val('');
+                $('#lastName').val('');
+                $('#email').val('');
+                $('#gender').val('');
+                $('#hobbies').val('');
+                $('#salary').val('');
+                $('#maritalStatus').val('');
+                $('#birthDate').val('');
+                $('#ddlCountry').val('');
+                $('#ddlState').val('');
+                $('#ddlCity').val('');
+                $('#zipCode').val('');
+                $('#password').val('');
+                $('#address').val('');
+            }
+            $('#addEmployeeModal').modal('show');
+        }
+
         $('#addEmployee').click(function () {
-            $('#addEmployeeModal').modal('show');
+            openEntityModal();
         });
+
+        // $('.updateEmployee').click(function () {
+        //     var employeeData = {
+        //         firstName: $(this).data('firstName'),
+        //         lastName: $(this).data('lastName'),
+        //         // Get other employee data from data attributes
+        //     };
+        //     openEntityModal(employeeData);
+        // });
+
         $('.updateEmployee').click(function () {
-            $('#addEmployeeModal').modal('show');
+            var employeeId = $(this).data('id');
+            console.log(employeeId)
+            $.ajax({
+                url: 'http://localhost:5055/api/Employees/get-employee-by-id/' + employeeId,
+                method: 'GET',
+                success: function (employee) {
+                    openEntityModal(JSON.stringify(employee));
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
+
+        function updateEmployeeList() {
+            $.ajax({
+                url: 'http://localhost:5055/api/Employees/get-all-employees',
+                method: 'GET',
+                success: function (data) {
+                    var tableBody = $('#employeeTable tbody');
+                    tableBody.empty();
+                    data.forEach(function (employee) {
+                        var row = $('<tr></tr>');
+                        row.append('<td>' + employee.firstName + '</td>');
+                        row.append('<td>' + employee.lastName + '</td>');
+                        row.append('<td>' + employee.email + '</td>');
+                        row.append('<td>' + employee.gender + '</td>');
+                        row.append('<td>' + employee.salary + '</td>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
 
         $('#saveEmployeeBtn').click(function (e) {
-            var formData = $('#employeeForm').serialize();
             e.preventDefault();
 
+            var formData = new FormData($('#employeeForm')[0]);
+            formData.append('photo', $('#photo')[0].files[0]);
+
+            var currentDate = new Date().toISOString();
+            formData.append('created', currentDate);
+
+            var url = 'http://localhost:5055/api/Employees/add-employee/';
+            var method = 'POST';
+            var employeeId = $('#employeeId').val();
+            console.log(employeeId);
+            if (employeeId) {
+                url = 'http://localhost:5055/api/Employees/update-employee/' + employeeId;
+                method = 'PUT';
+            }
+
             $.ajax({
-                url: '/Employee/AddEmployeeAsync/',
-                type: 'POST',
+                url: url,
+                method: method,
                 data: formData,
-                success: function (response) {
-                    if (response.success) {
-                        // Optionally, you can perform some action upon successful addition
-                        alert('Employee added successfully');
-                        $('#addEmployeeModal').modal('hide');
-                    } else {
-                        // Handle errors if any
-                        alert('Failed to add employee');
-                    }
+                processData: false,
+                contentType: false,
+                success: function () {
+                    $('#addEmployeeModal').modal('hide');
+                    updateEmployeeList();
                 },
-                error: function () {
-                    alert('Error occurred while adding employee');
+                error: function (xhr, status, error) {
                 }
             });
         });
@@ -204,7 +286,7 @@
 
             if (confirm("Are you sure you want to delete this employee?")) {
                 $.ajax({
-                    url: '/Home/DeleteEmployee',
+                    url: '/Employee/DeleteEmployee',
                     type: 'DELETE',
                     data: { id: employeeId },
                     success: function (result) {

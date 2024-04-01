@@ -23,17 +23,8 @@ namespace Employee.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var countries = await _employeeService.GetCountries();
-            ViewBag.Countries = new SelectList(countries, "Id", "Name");
             var employees = await _employeeService.GetEmployeesAsync();
             return View(employees);
-        }
-
-        public async Task<IActionResult> Add()
-        {
-            var countries = await _employeeService.GetCountries();
-            ViewBag.Countries = new SelectList(countries, "Id", "Name");
-            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
@@ -45,32 +36,6 @@ namespace Employee.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult DeleteEmployee(int id)
-        {
-            try
-            {
-                _employeeService.DeleteEmployeeAsync(id);
-                return Json(new { success = true });
-            }
-            catch (HttpRequestException)
-            {
-                return View("Error");
-            }
-        }
-
-        public ActionResult EmployeeDetails(int id)
-        {
-            try
-            {
-                var employee = _employeeService.GetEmployeeByIdAsync(id);
-                return Ok(employee);
-            }
-            catch (HttpRequestException)
-            {
-                return View("Error");
-            }
         }
     }
 }

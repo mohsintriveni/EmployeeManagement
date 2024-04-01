@@ -2,6 +2,7 @@
 using Employee.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace Employee.Controllers
 {
@@ -33,13 +34,12 @@ namespace Employee.Controllers
             }
         }
 
-        public async Task<IActionResult> AddEmployeeAsync(EmployeeModel employee)
+        public IActionResult DeleteEmployee(int id)
         {
             try
             {
-                await _employeeService.AddEmployeeAsync(employee);
-                return RedirectToAction("Index");
-
+                _employeeService.DeleteEmployeeAsync(id);
+                return Json(new { success = true });
             }
             catch (HttpRequestException)
             {
