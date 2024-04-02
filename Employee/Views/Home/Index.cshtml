@@ -1,4 +1,7 @@
 ﻿@model List<EmployeeModel>
+@using Employee.Services
+
+@inject EmployeeService employeeService
 
 <h1>Employee List</h1>
 
@@ -14,6 +17,10 @@
             <th>Email</th>
             <th>Gender</th>
             <th>Salary</th>
+            <th>Birth Date</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +32,10 @@
                 <td>@employee.Email</td>
                 <td>@employee.Gender</td>
                 <td>@employee.Salary</td>
+                <td>@employee.BirthDate.ToShortDateString()</td>
+                <td>@await employeeService.GetEmployeeCity(employee.City)</td>
+                <td>@await employeeService.GetEmployeeState(employee.State)</td>
+                <td>@await employeeService.GetEmployeeCountry(employee.Country)</td>
                 <td>
                     <button class="btn btn-primary view-details-btn" data-id="@employee.Id">View Details</button>
                     <a data-toggle="modal" data-target="#addEmployeeModal" class="btn btn-warning updateEmployee" data-id="@employee.Id">Edit</a>
