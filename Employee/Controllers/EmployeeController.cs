@@ -26,6 +26,14 @@ namespace Employee.Controllers
             try
             {
                 var employee = await _employeeService.GetEmployeeByIdAsync(id);
+
+                var cityName = await _employeeService.GetEmployeeCity(employee.City);
+                ViewBag.CityName = cityName;
+                var countryName = await _employeeService.GetEmployeeCountry(employee.Country);
+                ViewBag.CountryName = countryName;
+                var stateName = await _employeeService.GetEmployeeState(employee.State);
+                ViewBag.StateName = stateName;
+
                 return PartialView("_EmployeeDetails", employee);
             }
             catch (HttpRequestException)

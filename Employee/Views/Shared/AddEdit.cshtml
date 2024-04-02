@@ -9,93 +9,145 @@
             </div>
             <div class="modal-body">
                 <form id="employeeForm">
-                    <input type="hidden" id="employeeId" />
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" maxlength="50" required />
-                        <span class="text-danger" id="firstNameError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" maxlength="50" required />
-                        <span class="text-danger" id="lastNameError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" maxlength="50" />
-                        <span class="text-danger" id="emailError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label><br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="maleGender" value="M" checked>
-                            <label class="form-check-label" for="maleGender">Male</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" maxlength="50" required />
+                                <span class="text-danger" id="firstNameError"></span>
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="F">
-                            <label class="form-check-label" for="femaleGender">Female</label>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" maxlength="50" required />
+                                <span class="text-danger" id="lastNameError"></span>
+                            </div>
                         </div>
-                        <span class="text-danger" id="genderError"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="photo">Photo</label>
-                        <input type="file" class="form-control-file" id="photo" name="photo">
-                        <span class="text-danger" id="photoError"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="maritalStatus" name="maritalStatus" value="true">
-                            <label class="form-check-label" for="maritalStatus">Are you married?</label>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" maxlength="50" />
+                                <span class="text-danger" id="emailError"></span>
+                            </div>
                         </div>
-                        <span class="text-danger" id="maritalStatusError"></span>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="gender">Gender</label><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="maleGender" value="M" checked>
+                                    <label class="form-check-label" for="maleGender">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="F">
+                                    <label class="form-check-label" for="femaleGender">Female</label>
+                                </div>
+                                <span class="text-danger" id="genderError"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="birthDate">Birth Date</label>
-                        <input type="datetime-local" class="form-control" id="birthDate" name="birthDate" />
-                        <span class="text-danger" id="birthDateError"></span>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="photo">Photo</label>
+                                <input type="file" class="form-control-file" id="photo" name="photo">
+                                <span class="text-danger" id="photoError"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="maritalStatus" name="maritalStatus" value="true">
+                                    <label class="form-check-label" for="maritalStatus">Are you married?</label>
+                                </div>
+                                <span class="text-danger" id="maritalStatusError"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="hobbies">Hobbies</label>
-                        <input type="text" class="form-control" id="hobbies" name="hobbies" maxlength="100" />
-                        <span class="text-danger" id="hobbiesError"></span>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="birthDate">Birth Date</label>
+                                <input type="date" class="form-control" id="birthDate" name="birthDate" />
+                                <span class="text-danger" id="birthDateError"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="hobbies">Hobbies</label>
+                                <input type="text" class="form-control" id="hobbies" name="hobbies" maxlength="100" />
+                                <span class="text-danger" id="hobbiesError"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="salary">Salary</label>
-                        <input type="number" class="form-control" id="salary" name="salary" min="5000" step="any" />
-                        <span class="text-danger" id="salaryError"></span>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="salary">Salary</label>
+                                <input type="number" class="form-control" id="salary" name="salary" min="5000" step="any" />
+                                <span class="text-danger" id="salaryError"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <textarea class="form-control" id="address" name="address" maxlength="500"></textarea>
+                                <span class="text-danger" id="addressError"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea class="form-control" id="address" name="address" maxlength="500"></textarea>
-                        <span class="text-danger" id="addressError"></span>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <select class="form-control" id="ddlCountry" name="country">
+                                </select>
+                                <span class="text-danger" id="countryError"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <select class="form-control" id="ddlState" name="state">
+                                </select>
+                                <span class="text-danger" id="stateError"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select class="form-control" id="ddlCountry" name="country">
-                        </select>
-                        <span class="text-danger" id="countryError"></span>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <select class="form-control" id="ddlCity" name="city">
+                                </select>
+                                <span class="text-danger" id="cityError"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="zipCode">Zip Code</label>
+                                <input type="text" class="form-control" id="zipCode" name="zipCode" maxlength="6" />
+                                <span class="text-danger" id="zipCodeError"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="state">State</label>
-                        <select class="form-control" id="ddlState" name="state">
-                        </select>
-                        <span class="text-danger" id="stateError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <select class="form-control" id="ddlCity" name="city">
-                        </select>
-                        <span class="text-danger" id="cityError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="zipCode">Zip Code</label>
-                        <input type="text" class="form-control" id="zipCode" name="zipCode" maxlength="6" />
-                        <span class="text-danger" id="zipCodeError"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,16}$" title="Password must be 8-16 characters long and contain at least one uppercase letter, one number, and one special character." required />
-                        <span class="text-danger" id="passwordError"></span>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,16}$" title="Password must be 8-16 characters long and contain at least one uppercase letter, one number, and one special character." required />
+                                <span class="text-danger" id="passwordError"></span>
+                            </div>
+                        </div>
                     </div>
                 </form>
 

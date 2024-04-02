@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "dTBzenxzw8Ls4cFVWw9fM+G90AvzfNo2tl10Wu7uS/htmUmmfSuR9Soq5V/m6PNM5MLTcFh4DoFU6+FW2mTqEA==",
+  "dgSpecHash": "3Cppe0ggViqxj1Mmno76wwa4N37Wo5Rx5PWGtXp98YDhDwoBaLltHgkmnZYqoAT8XoeRu/iFNdtD4r2NyGuRMA==",
   "success": true,
   "projectFilePath": "C:\\Users\\TGCUser105\\Desktop\\EmployeeManagementMVC\\Employee\\Employee.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\TGCUser105\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\TGCUser105\\.nuget\\packages\\system.net.http.json\\7.0.0\\system.net.http.json.7.0.0.nupkg.sha512",
     "C:\\Users\\TGCUser105\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\TGCUser105\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"

@@ -256,6 +256,13 @@
             var currentDate = new Date().toISOString();
             formData.append('created', currentDate);
 
+            var birthDate = $('#birthDate').val();
+            console.log(birthDate);
+            if (birthDate) {
+                var birthDateISO = new Date(birthDate + 'T00:00:00').toISOString();
+                formData.append('birthDate', birthDateISO);
+            }
+
             var url = 'http://localhost:5055/api/Employees/add-employee/';
             var method = 'POST';
             var employeeId = $('#employeeId').val();

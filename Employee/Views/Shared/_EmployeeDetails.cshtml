@@ -11,14 +11,14 @@
     <div class="col-md-4">
         <p>Gender: @Model.Gender</p>
         <p>MaritalStatus: @Model.MaritalStatus</p>
-        <p>BirthDate: @Model.BirthDate</p>
+        <p>BirthDate: @Model.BirthDate.ToShortDateString()</p>
         <p>Hobbies: @Model.Hobbies</p>
     </div>
     <div class="col-md-4">
         <p>Address: @Model.Address</p>
-        <p>Country: @Model.Country</p>
-        <p>State: @Model.State</p>
-        <p>City: @Model.City</p>
+        <p>Country: @ViewBag.CountryName</p>
+        <p>State: @ViewBag.StateName</p>
+        <p>City: @ViewBag.CityName</p>
         <p>ZipCode: @Model.ZipCode</p>
     </div>
 </div>
